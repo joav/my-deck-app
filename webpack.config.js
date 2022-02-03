@@ -60,7 +60,7 @@ const config = {
   },
 };
 
-module.exports = () => {
+module.exports = (env) => {
   let environmentFile = 'environment.ts';
   config.mode = 'development';
   if (isProduction) {
@@ -72,7 +72,8 @@ module.exports = () => {
     new RegExp(`environment\\.ts`),
     environmentFile
   ));
-
-  config.plugins.push(new WorkboxWebpackPlugin.GenerateSW());
+  if (!env.WEBPACK_SERVE) {
+    config.plugins.push(new WorkboxWebpackPlugin.GenerateSW());
+  }
   return config;
 };
