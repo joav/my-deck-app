@@ -1,15 +1,7 @@
-# 🚀 Welcome to your new awesome project!
+# My deck - App
 
-This project has been created using **webpack-cli**, you can now run
+Proyecto para crear mi propio deck(Stream Deck) para productividad.
 
-```
-npm run build
-```
+## Proposito del repositorio
 
-or
-
-```
-yarn build
-```
-
-to bundle your application
+Código de la aplicación en la que se configurará el deck
