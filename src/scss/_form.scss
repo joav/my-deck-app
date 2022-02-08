@@ -1,0 +1,16 @@
+.form {
+  text-align: center;
+  &__line {
+    padding: $minimum-space * 2;
+  }
+  &__input {
+    outline: none;
+    padding: $minimum-space * 2;
+    width: 100%;
+  }
+  &__submit {
+    outline: none;
+    padding: $minimum-space * 2;
+    width: 100%;
+  }
+}

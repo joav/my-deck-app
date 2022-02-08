@@ -9,12 +9,113 @@
 </head>
 
 <body>
+  <h1>My Deck - APP</h1>
   <div id="app">
     <div class="app-grid">
-      <div class="commands"></div>
-      <div class="board-wrapper"></div>
-      <div class="boards"></div>
-      <div class="btns"></div>
+      <div class="commands app-grid__item">
+        <h3 class="app-grid__item-title">Colección de atajos</h3>
+        <div class="commands__list">
+          <p class="commands__list-item commands__list-item_parent">Grupo 1</p>
+          <p class="commands__list-item"><span class="commands__list-item-name">Atajo 1</span></p>
+          <p class="commands__list-item"><span class="commands__list-item-name">Atajo 2</span></p>
+          <p class="commands__list-item"><span class="commands__list-item-name">Atajo 3</span></p>
+          <p class="commands__list-item commands__list-item_parent">Grupo 2</p>
+          <p class="commands__list-item"><span class="commands__list-item-name">Atajo 1</span></p>
+          <p class="commands__list-item"><span class="commands__list-item-name">Atajo 2</span></p>
+          <p class="commands__list-item"><span class="commands__list-item-name">Atajo 3</span></p>
+        </div>
+      </div>
+      <div class="board-wrapper app-grid__item">
+        <h3 class="app-grid__item-title" contenteditable="true">Nombre del tablero</h3>
+        <div class="board-wrapper__container">
+          <div class="board">
+            <div class="board__container">
+              <div class="board__container-wrapper">
+                <div class="board__item">
+                  <div class="board__item-square">
+                    <div class="board__item-content" style="background-image: url('https://cdn-icons-png.flaticon.com/512/906/906324.png');"></div>
+                  </div>
+                </div>
+                <div class="board__item"><div class="board__item-square"></div></div>
+                <div class="board__item"><div class="board__item-square"></div></div>
+                <div class="board__item"><div class="board__item-square"></div></div>
+                <div class="board__item"><div class="board__item-square"></div></div>
+                <div class="board__item"><div class="board__item-square"></div></div>
+                <div class="board__item"><div class="board__item-square"></div></div>
+                <div class="board__item"><div class="board__item-square"></div></div>
+                <div class="board__item"><div class="board__item-square"></div></div>
+                <div class="board__item"><div class="board__item-square"></div></div>
+                <div class="board__item"><div class="board__item-square"></div></div>
+                <div class="board__item"><div class="board__item-square"></div></div>
+                <div class="board__item"><div class="board__item-square"></div></div>
+                <div class="board__item"><div class="board__item-square"></div></div>
+                <div class="board__item"><div class="board__item-square"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="boards app-grid__item">
+        <h3 class="app-grid__item-title">Colección de tableros</h3>
+        <ul class="boards__list">
+          <li class="boards__list-item boards__list-item-name_selected"><span class="boards__list-item-name">Tablero 1</span></li>
+          <li class="boards__list-item"><span class="boards__list-item-name">Tablero 2</span></li>
+          <li class="boards__list-item"><span class="boards__list-item-name">Tablero 3</span></li>
+          <li class="boards__list-item"><span class="boards__list-item-name">Tablero 4</span></li>
+        </ul>
+        <button class="boards__add">+</button>
+      </div>
+      <div class="btns app-grid__item">
+        <h3 class="app-grid__item-title btns__title">Botones guardados</h3>
+        <div class="btns__list-container">
+          <button class="btns__arrow btns__arrow-left"><</button>
+          <div class="btns__list">
+            <div class="btns__list-wrapper">
+              <!-- <div class="btns__item">
+                <div class="btns__item-square">
+                  <p class="btns__item-content">content</p>
+                </div>
+              </div> -->
+              <div class="btns__item"></div>
+              <div class="btns__item"></div>
+              <div class="btns__item"></div>
+              <div class="btns__item"></div>
+              <div class="btns__item"></div>
+              <div class="btns__item"></div>
+              <div class="btns__item"></div>
+              <div class="btns__item"></div>
+              <div class="btns__item"></div>
+              <div class="btns__item"></div>
+              <div class="btns__item"></div>
+              <div class="btns__item"></div>
+              <div class="btns__item"></div>
+              <div class="btns__item"></div>
+              <div class="btns__item"></div>
+              <div class="btns__item"></div>
+              <div class="btns__item"></div>
+              <div class="btns__item"></div>
+              <div class="btns__item"></div>
+              <div class="btns__item"></div>
+            </div>
+          </div>
+          <button class="btns__arrow btns__arrow-right">></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal">
+    <div class="modal__content">
+      <div class="modal__header">
+        <span class="modal__close">&times;</span>
+        <h2 class="modal__title">Modal Header</h2>
+      </div>
+      <div class="modal__body">
+        <p>Some text in the Modal Body</p>
+        <p>Some other text...</p>
+      </div>
+      <div class="modal__footer">
+        <h3>Modal Footer</h3>
+      </div>
     </div>
   </div>
   <script>

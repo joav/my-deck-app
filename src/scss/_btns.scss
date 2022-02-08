@@ -1,0 +1,59 @@
+.btns {
+  grid-area: btns;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: auto;
+  grid-template-areas: "title btns btns btns btns";
+  height: 15vh;
+  &__title {
+    grid-area: title;
+    border-bottom: none;
+    border-right: 1px dashed #666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  &__arrow {
+    height: 100%;
+    width: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: 0;
+    transition: all 0.3s;
+    &:hover {
+      opacity: 0.7;
+    }
+    &:disabled {
+      cursor: inherit;
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+  &__list {
+    &-container {
+      grid-area: btns;
+      display: flex;
+    }
+    flex: 1;
+    grid-area: list;
+    position: relative;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    &-wrapper {
+      position: absolute;
+      padding: 5px;
+      display: flex;
+      gap: 5px;
+      height: 100%;
+      transition: all 0.5s;
+    }
+  }
+  &__item {
+    height: 100%;
+    background: #dadada;
+    width: calc(15vh - ($minimum-space * 2));
+  }
+}
