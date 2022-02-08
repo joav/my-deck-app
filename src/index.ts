@@ -1,3 +1,7 @@
 import { environment } from "./environment/environment";
 import "./scss/styles.scss";
-console.log(environment.api);
+import { initModules } from './modules/index';
+
+window.addEventListener('DOMContentLoaded', (event) => {
+  initModules();
+});
