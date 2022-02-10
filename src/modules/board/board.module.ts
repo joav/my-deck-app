@@ -4,7 +4,9 @@ import { BoardSelectedEvent } from "../boards/models/board-selected-event";
 import { BoardsEvent } from "../boards/models/boards-event";
 import { emptyBoard } from "../shared/empty-board";
 import { emitEvent, onEvent } from "../shared/events-functions";
+import { SlotComplete } from "../shared/slots-to-array";
 import { BoardComponent } from "./components/board.component";
+import { BoardEvent } from "./models/board-event";
 
 export class BoardModule implements BaseModule {
   wrapper: HTMLElement;
@@ -20,6 +22,7 @@ export class BoardModule implements BaseModule {
   
   registerEvents() {
     onEvent<BoardSelectedEvent>(BoardsEvent.BOARD_SELECTED, e => this.handleBoardSelected(e.detail));
+    onEvent<SlotComplete>(BoardEvent.SLOT_SETTED, e => this.handleSlotSetted(e.detail));
   }
 
   async handleBoardSelected(boardSelected: BoardSelectedEvent) {
@@ -45,6 +48,14 @@ export class BoardModule implements BaseModule {
         emitEvent(BoardsEvent.BOARD_UPDATED);
       } catch (error) { }
     }
+  }
+
+  async handleSlotSetted(slot: SlotComplete) {
+    await BoardsService.setSlot(this.boardComponent.board.id, slot);
+
+    emitEvent<BoardSelectedEvent>(BoardsEvent.BOARD_SELECTED, {
+      boardId: this.boardComponent.board.id
+    });
   }
 
   checkEnter(e: InputEvent) {

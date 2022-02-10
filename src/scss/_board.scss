@@ -41,6 +41,34 @@
       height: 100%;
       background-size: cover;
       background-position: center center;
+      display: flex;
+      align-items: start;
+      justify-content: center;
+    }
+    &-name {
+      background-color: #0000004a;
+      color: #fff;
+      padding: $minimum-space;
+      border-radius: 5px;
+    }
+    &-actions {
+      position: absolute;
+      height: 20px;
+      width: 100%;
+      bottom: 0;
+      display: flex;
+      justify-content: start;
+      gap: 2px;
+    }
+    &-btn {
+      width: 20px;
+      height: 20px;
+      background-color: #0000004a;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
     }
   }
 }

@@ -1,5 +1,6 @@
 import { environment } from "../environment/environment";
 import { Board } from "../models/board";
+import { SlotComplete } from "../modules/shared/slots-to-array";
 
 export class BoardsService {
   static async getBoards(): Promise<Board[]> {
@@ -27,6 +28,16 @@ export class BoardsService {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(board),
+    }).then(r => r.json());
+  }
+
+  static async setSlot(boardId: string, slot: SlotComplete): Promise<Board> {
+    return fetch(`${environment.api}boards/${boardId}/slots/${slot.slotId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(slot),
     }).then(r => r.json());
   }
 }

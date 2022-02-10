@@ -15,7 +15,9 @@ export class BoardComponent extends WithComponentsComponent {
 
     this.boardElement.querySelector('.board__container-wrapper').innerHTML = this.printSlots(slots);
 
-    this.boardElement.querySelectorAll('.board__item').forEach((e, i) => this.components.push(new SlotComponent((e as HTMLElement), this.boardElement, slots[i])));
+    this.boardElement.querySelectorAll('.board__item').forEach((e, i) => {
+      this.components.push(new SlotComponent((e as HTMLElement), this.boardElement, slots[i]));
+    });
 
     await super.init();
   }
@@ -23,14 +25,18 @@ export class BoardComponent extends WithComponentsComponent {
   printSlots(slots: SlotComplete[]) {
     return slots.map(s => `<div class="board__item">
   <div class="board__item-square" ${this.slotBackground(s)}>
-    <div class="board__item-content" ${this.slotBackground(s, "image")}></div>
+    <div class="board__item-content" ${this.slotBackground(s, "image")}>
+      ${this.slotContent(s)}
+    </div>
+    <div class="board__item-actions">
+      ${this.slotButtons(s)}
+    </div>
   </div>
 </div>`)
       .join('');
   }
 
   slotBackground(slot: Slot, type: "color" | "image" = "color"): string {
-    if (slot.state === "EMPTY")
     return (
       slot.state === "EMPTY"
       ? ""
@@ -39,6 +45,26 @@ export class BoardComponent extends WithComponentsComponent {
         ? `style="background-color: ${slot.button.color};"`
         : `style="background-image: url('${slot.button.icon}');"`
       )
+    );
+  }
+
+  slotContent(slot: Slot) {
+    return (
+      slot.state === "EMPTY"
+        ? ""
+        : `<span class="board__item-name">${slot.button.name}</span>`
+    );
+  }
+
+  slotButtons(slot: Slot) {
+    return (
+      slot.state === "EMPTY"
+        ? `<div class="board__item-btn board__item-btn_add">+</div>`
+        : `
+        <div class="board__item-btn board__item-btn_save">💾</div>
+        <div class="board__item-btn board__item-btn_config">⚙</div>
+        <div class="board__item-btn board__item-btn_remove">🗑</div>
+        `
     );
   }
 }

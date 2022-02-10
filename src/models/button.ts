@@ -1,9 +1,14 @@
 import { Params } from "./params";
 
+export type Action = {
+  commandId: string;
+  params: Params;
+}
+
 export interface Button {
-    name: string;
-    icon: string;
-    color: string;
-    commandId: string;
-    params: Params;
+  id?: string;
+  name: string;
+  icon: string;
+  color: string;
+  steps: Action[];
 }

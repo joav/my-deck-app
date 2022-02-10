@@ -1,4 +1,3 @@
-import { environment } from "../../../environment/environment";
 import { BoardsService } from "../../../services/boards.service";
 import { BaseComponent } from "../../base.component";
 import { modalInstance } from "../../modal/modal.module";
