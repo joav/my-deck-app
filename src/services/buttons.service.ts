@@ -29,4 +29,8 @@ export class ButtonsService {
       body: JSON.stringify(button),
     }).then(r => r.json());
   }
+
+  static async deleteButton(buttonId: string): Promise<any> {
+    return fetch(`${environment.api}buttons/${buttonId}`, {method: 'DELETE'}).then(r => r.json());
+  } 
 }

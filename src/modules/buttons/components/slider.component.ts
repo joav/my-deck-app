@@ -26,7 +26,6 @@ export class SliderComponent extends WithComponentsComponent {
     window.addEventListener('resize', () => {
       this.reset();
     });
-    this.updateArrowsState();
   }
 
   registerEvents() {
@@ -37,6 +36,7 @@ export class SliderComponent extends WithComponentsComponent {
       this.toLeft();
     });
     onEvent(ButtonsEvent.BUTTON_ADDED, e => this.updateButtons());
+    onEvent(ButtonsEvent.BUTTON_REMOVED, e => this.updateButtons());
   }
 
   async updateButtons() {
@@ -49,6 +49,8 @@ export class SliderComponent extends WithComponentsComponent {
     const buttons = await ButtonsService.getButtons();
     this.slider.innerHTML = this.printButtons(buttons);
     this.slider.querySelectorAll('.btns__item').forEach((e, i) => this.components.push(new ButtonComponent((e as HTMLElement), this.slider, buttons[i])));
+    this.reset();
+    this.updateArrowsState();
   }
 
   printButtons(buttons: Button[]) {
@@ -77,7 +79,7 @@ export class SliderComponent extends WithComponentsComponent {
   }
 
   get canMoveToLeft() {
-    return this.steps <= this.components.length - 1;
+    return this.components.length > 1 && this.steps <= this.components.length - 1;
   }
 
   get canMoveToRight() {
