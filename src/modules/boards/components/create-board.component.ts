@@ -2,6 +2,7 @@ import { BoardsService } from "../../../services/boards.service";
 import { BaseComponent } from "../../base.component";
 import { modalInstance } from "../../modal/modal.module";
 import { emitEvent } from "../../shared/events-functions";
+import { BoardAddedEvent } from "../models/board-added-event";
 import { BoardsEvent } from "../models/boards-event";
 
 export class CreateBoardComponent implements BaseComponent {
@@ -38,8 +39,8 @@ export class CreateBoardComponent implements BaseComponent {
   }
 
   async addBoard(boardName: string) {
-    await BoardsService.createBoard(boardName);
+    const board = await BoardsService.createBoard(boardName);
 
-    emitEvent(BoardsEvent.BOARD_ADDED);
+    emitEvent<BoardAddedEvent>(BoardsEvent.BOARD_ADDED, {boardId: board.id});
   }
 }

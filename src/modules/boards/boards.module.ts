@@ -4,6 +4,7 @@ import { emitEvent, onEvent } from "../shared/events-functions";
 import { WithComponentsModule } from "../with-components.module";
 import { BoardSelectorComponent } from "./components/board-selector.component";
 import { CreateBoardComponent } from "./components/create-board.component";
+import { BoardAddedEvent } from "./models/board-added-event";
 import { BoardSelectedEvent } from "./models/board-selected-event";
 import { BoardsEvent } from "./models/boards-event";
 
@@ -25,7 +26,10 @@ export class BoardsModule extends WithComponentsModule {
 
   registerEvents() {
     onEvent<BoardSelectedEvent>(BoardsEvent.BOARD_SELECTED, e => this.currentSelected = e.detail.boardId);
-    onEvent(BoardsEvent.BOARD_ADDED, e => this.updateBoards());
+    onEvent<BoardAddedEvent>(BoardsEvent.BOARD_ADDED, async e => {
+      this.updateBoards();
+      emitEvent<BoardSelectedEvent>(BoardsEvent.BOARD_SELECTED, {boardId: e.detail.boardId});
+    });
     onEvent(BoardsEvent.BOARD_UPDATED, e => this.updateBoards());
   }
 
