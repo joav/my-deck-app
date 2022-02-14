@@ -1,0 +1,23 @@
+.step {
+  display: flex;
+  gap: $minimum-space;
+  justify-content: space-between;
+  align-items: center;
+  cursor: move;
+  &__actions {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    gap: 2px;
+  }
+  &__btn {
+    width: 20px;
+    height: 20px;
+    background-color: #0000004a;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+}

@@ -23,7 +23,7 @@ export class BoardComponent extends WithComponentsComponent {
   }
 
   printSlots(slots: SlotComplete[]) {
-    return slots.map(s => `<div class="board__item">
+    return slots.map(s => `<div class="board__item board__item_${s.state}">
   <div class="board__item-square" ${this.slotBackground(s)}>
     <div class="board__item-content" ${this.slotBackground(s, "image")}>
       ${this.slotContent(s)}

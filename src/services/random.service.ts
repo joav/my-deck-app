@@ -20,7 +20,7 @@ export class RandomService {
     ];
     let color = "#";
     const limit = withAlfa?8:6;
-    for (let index = 0; index < 8; index++) {
+    for (let index = 0; index < limit; index++) {
       color += chars[RandomService.int(0, chars.length)];
     }
     return color;

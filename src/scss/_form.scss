@@ -8,9 +8,46 @@
     padding: $minimum-space * 2;
     width: 100%;
   }
-  &__submit {
+  &__input-color {
+    height: 50px;
+  }
+  &__submit, &__button {
     outline: none;
     padding: $minimum-space * 2;
     width: 100%;
+    cursor: pointer;
+  }
+  &__button {
+    background-color: $principal-color;
+    color: #fff;
+    border: none;
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+  &__tabs {
+    display: flex;
+    gap: $minimum-space;
+    padding: $minimum-space;
+  }
+  &__tab {
+    height: 20vh;
+    overflow-y: auto;
+    display: none;
+    &_active {
+      display: block;
+    }
+    &-title {
+      cursor: pointer;
+      padding: $minimum-space;
+      border-bottom: 2px solid transparent;
+      font-weight: 600;
+      &_active {
+        border-bottom: 2px solid $principal-color;
+      }
+      &:hover {
+        border-bottom: 2px solid $principal-color-a-5;
+      }
+    }
   }
 }

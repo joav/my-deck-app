@@ -7,6 +7,7 @@ import { ButtonsEvent } from "../../buttons/models/buttons-event";
 import { emitEvent } from "../../shared/events-functions";
 import { SlotComplete } from "../../shared/slots-to-array";
 import { BoardEvent } from "../models/board-event";
+import { SlotConfigurationComponent } from "./slot-configuration.component";
 import { SlotFullAlertComponent, SlotFullAlertResult } from "./slot-full-alert.component";
 
 export class SlotComponent implements BaseComponent {
@@ -82,8 +83,10 @@ export class SlotComponent implements BaseComponent {
   }
 
   handleDrag(e: DragEvent) {
-    e.dataTransfer.setData("slotId", this.slot.slotId);
-    e.dataTransfer.setData("button", JSON.stringify({...this.slot.button, id: null}));
+    if (this.slot.state !== "EMPTY") {
+      e.dataTransfer.setData("slotId", this.slot.slotId);
+      e.dataTransfer.setData("button", JSON.stringify({...this.slot.button, id: null}));
+    }
   }
 
   handleBtnClick(btn: HTMLElement) {
@@ -111,7 +114,7 @@ export class SlotComponent implements BaseComponent {
   }
 
   async handleAdd() {
-    console.log('handleAdd');
+    new SlotConfigurationComponent(this.slot);
   }
   
   async handleSave() {
@@ -120,7 +123,7 @@ export class SlotComponent implements BaseComponent {
   }
 
   handleConfig() {
-    console.log('handleConfig');
+    new SlotConfigurationComponent(this.slot);
   }
 
   handleRemove() {
