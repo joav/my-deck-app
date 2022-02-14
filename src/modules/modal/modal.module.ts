@@ -5,6 +5,8 @@ export type OpenOptions = {
   body?: string;
   footer?: string;
   maxWidth?: string;
+  hideClose?: boolean;
+  disallowScape?: boolean;
 };
 
 export class ModalModule implements BaseModule {
@@ -31,7 +33,7 @@ export class ModalModule implements BaseModule {
     document.body.addEventListener('keyup', (e) => this.verifyEscape(e));
   }
 
-  open({title, body, footer, maxWidth}: OpenOptions) {
+  open({title, body, footer, maxWidth, hideClose, disallowScape}: OpenOptions) {
     if (title) {
       this.title.innerHTML = title;
     } else {
@@ -56,6 +58,14 @@ export class ModalModule implements BaseModule {
     } else {
       this.content.style.maxWidth = "";
     }
+
+    if (hideClose) {
+      this.close.style.opacity = "0";
+    } else {
+      this.close.style.opacity = "1";
+    }
+
+    this.allowScape = !disallowScape;
     
     this.show();
   }
