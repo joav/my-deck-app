@@ -1,6 +1,8 @@
 import { Button } from "../../../models/button";
 import { Command } from "../../../models/command";
+import { ButtonsService } from "../../../services/buttons.service";
 import { BaseComponent } from "../../base.component";
+import { ButtonsEvent } from "../../buttons/models/buttons-event";
 import { emitEvent } from "../../shared/events-functions";
 import { SlotComplete } from "../../shared/slots-to-array";
 import { BoardEvent } from "../models/board-event";
@@ -58,12 +60,13 @@ export class SlotComponent implements BaseComponent {
     }
   }
 
-  handleAdd() {
+  async handleAdd() {
     console.log('handleAdd');
   }
-
-  handleSave() {
-    console.log('handleSave');
+  
+  async handleSave() {
+    await ButtonsService.createButton({...this.slot.button, id: ""});
+    emitEvent(ButtonsEvent.BUTTON_ADDED);
   }
 
   handleConfig() {

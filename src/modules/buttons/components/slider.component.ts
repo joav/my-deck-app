@@ -1,4 +1,9 @@
+import { Button } from "../../../models/button";
+import { ButtonsService } from "../../../services/buttons.service";
+import { onEvent } from "../../shared/events-functions";
 import { WithComponentsComponent } from "../../with-components.component";
+import { ButtonsEvent } from "../models/buttons-event";
+import { ButtonComponent } from "./button.component";
 
 const MIN_SPACE = 5;
 
@@ -16,18 +21,50 @@ export class SliderComponent extends WithComponentsComponent {
   }
 
   async init() {
+    this.registerEvents();
+    await this.updateButtons();
+    window.addEventListener('resize', () => {
+      this.reset();
+    });
+    this.updateArrowsState();
+  }
+
+  registerEvents() {
     this.left.addEventListener('click', e => {
       this.toRight();
     });
     this.right.addEventListener('click', e => {
       this.toLeft();
     });
-    this.el.querySelectorAll('.btns__item').forEach((e) => this.components.push({init: async () => {}}));
-    super.init();
-    window.addEventListener('resize', () => {
-      this.reset();
-    });
-    this.updateArrowsState();
+    onEvent(ButtonsEvent.BUTTON_ADDED, e => this.updateButtons());
+  }
+
+  async updateButtons() {
+    await this.getButtons();
+    await super.init();
+  }
+
+  async getButtons() {
+    this.components = [];
+    const buttons = await ButtonsService.getButtons();
+    this.slider.innerHTML = this.printButtons(buttons);
+    this.slider.querySelectorAll('.btns__item').forEach((e, i) => this.components.push(new ButtonComponent((e as HTMLElement), this.slider, buttons[i])));
+  }
+
+  printButtons(buttons: Button[]) {
+    return buttons.map(b => `<div class="btns__item" ${this.buttonBackground(b)}>
+    <p class="btns__item-name">${b.name}</p>
+    <div class="btns__item-actions"><div class="btns__item-action">🗑</div></div>
+  </div>`)
+      .join("");
+  }
+
+  buttonBackground(button: Button, type: "color" | "image" = "color"): string {
+    return (
+      type === "color"
+        ? `style="background-color: ${button.color};"`
+        : `style="background-image: url('${button.icon}');"`
+    );
   }
 
   reset() {
