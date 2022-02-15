@@ -2,11 +2,25 @@
   text-align: center;
   &__line {
     padding: $minimum-space * 2;
+    &_flex {
+      display: flex;
+      align-items: center;
+      gap: $minimum-space;
+    }
   }
   &__input {
     outline: none;
     padding: $minimum-space * 2;
     width: 100%;
+    &_flex {
+      flex: 1;
+    }
+  }
+  &__label {
+    flex: 1;
+    font-weight: 600;
+    display: flex;
+    justify-content: end;
   }
   &__input-color {
     height: 50px;

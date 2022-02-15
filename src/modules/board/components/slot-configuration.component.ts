@@ -141,7 +141,7 @@ export class SlotConfigurationComponent implements BaseComponent {
     return `<div class="form__line step" data-step="${index}" draggable="true">
       <div class="step__name">${this.commandsData.commands[step.commandId]?.name || "Tablero específico"}</div>
       <div class="step__actions">
-        ${this.commandsData.commands[step.commandId]?.defaultParams?'<div class="step__btn step__btn_config">⚙</div>':''}
+        <div class="step__btn step__btn_config">⚙</div>
         <div class="step__btn step__btn_remove">🗑</div>
       </div>
     </div>`;
