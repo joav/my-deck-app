@@ -29,16 +29,6 @@ export class SlotComponent implements BaseComponent {
   async handleDrop(e: DragEvent) {
     const slotId = e.dataTransfer.getData("slotId");
     const button: Button = JSON.parse(e.dataTransfer.getData("button"));
-
-    let shouldConfigure = false;
-    if (e.dataTransfer.getData('shouldConfigure')) {
-      shouldConfigure = JSON.parse(e.dataTransfer.getData('shouldConfigure'));
-    }
-
-    let command: Command;
-    if (shouldConfigure) {
-      command = JSON.parse(e.dataTransfer.getData("command"));
-    }
     
     if (slotId !== this.slot.slotId) {
       let action: SlotFullAlertResult = "replace";
@@ -59,15 +49,6 @@ export class SlotComponent implements BaseComponent {
           
         default:
           return;
-      }
-
-      if (shouldConfigure) {
-        // TODO: Configure command
-        
-        const buttonCommand = button.steps.reverse().find(s => s.commandId === command.id);
-        let params: Params = {...buttonCommand.params};
-
-        buttonCommand.params = params;
       }
       
       emitEvent(BoardEvent.SLOT_SETTED, this.slot);

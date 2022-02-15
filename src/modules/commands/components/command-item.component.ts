@@ -23,14 +23,10 @@ export class CommandItemComponent implements BaseComponent {
       steps: [
         {
           commandId: this.command.id,
-          params: {
-            
-          }
+          params: this.command.defaultParams || {}
         }
       ]
     };
     e.dataTransfer.setData("button", JSON.stringify(button));
-    e.dataTransfer.setData("shouldConfigure", this.command.params?"true":"false");
-    e.dataTransfer.setData("command", JSON.stringify(this.command));
   }
 }
