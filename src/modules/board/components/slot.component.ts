@@ -7,6 +7,7 @@ import { ButtonsEvent } from "../../buttons/models/buttons-event";
 import { emitEvent } from "../../shared/events-functions";
 import { SlotComplete } from "../../shared/slots-to-array";
 import { BoardEvent } from "../models/board-event";
+import { SlotMovedEvent } from "../models/slot-moved-event";
 import { SlotConfigurationComponent } from "./slot-configuration.component";
 import { SlotFullAlertComponent, SlotFullAlertResult } from "./slot-full-alert.component";
 
@@ -50,15 +51,18 @@ export class SlotComponent implements BaseComponent {
         default:
           return;
       }
-      
-      emitEvent(BoardEvent.SLOT_SETTED, this.slot);
 
       if (slotId) {
-        emitEvent<SlotComplete>(BoardEvent.SLOT_SETTED, {
-          slotId,
-          state: "EMPTY",
-          button: null,
+        emitEvent<SlotMovedEvent>(BoardEvent.SLOT_MOVED, {
+          updatedSlot: this.slot,
+          emptySlot: {
+            slotId,
+            state: "EMPTY",
+            button: null,
+          }
         });
+      } else {
+        emitEvent(BoardEvent.SLOT_SETTED, this.slot);
       }
     }
   }
