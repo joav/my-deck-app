@@ -3,7 +3,8 @@ const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
+// const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
+const cleanPlugin = require('clean-webpack-plugin');
 
 const isProduction = process.env.NODE_ENV == 'production';
 
@@ -73,7 +74,8 @@ module.exports = (env) => {
     environmentFile
   ));
   if (!env.WEBPACK_SERVE) {
-    config.plugins.push(new WorkboxWebpackPlugin.GenerateSW());
+    config.plugins.unshift(new cleanPlugin.CleanWebpackPlugin());
+    // config.plugins.push(new WorkboxWebpackPlugin.GenerateSW());
   }
   return config;
 };
