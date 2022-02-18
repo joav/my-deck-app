@@ -1,3 +1,4 @@
+import { environment } from "../../../environment/environment";
 import { Action } from "../../../models/button";
 import { Command, Param } from "../../../models/command";
 import { CommandsData } from "../../../models/commands-data";
@@ -69,11 +70,11 @@ export class CommandConfigurationComponent implements BaseComponent {
     this.commandSelect.addEventListener('change', () => this.handleCommandChange());
   }
 
-  onSubmit(e: SubmitEvent, resolve: (value: CommandConfigurationResult | PromiseLike<CommandConfigurationResult>) => void) {
+  async onSubmit(e: SubmitEvent, resolve: (value: CommandConfigurationResult | PromiseLike<CommandConfigurationResult>) => void) {
     e.preventDefault();
     if (this.commandId) resolve({
       commandId: this.commandId,
-      params: this.getParams()
+      params: await this.getParams()
     });
     else resolve(null);
     modalInstance.doClose();
@@ -107,7 +108,27 @@ export class CommandConfigurationComponent implements BaseComponent {
   
   printParam(param: Param) {
     let input = "";
+    let preInput = "";
     switch (param.type) {
+      case "file":
+        preInput = `<p class="form__line form__line_flex">
+        <label class="form__label">${(param.placeholder || param.label) || ''}</label>
+        <select
+          class="form__input form__input_flex"
+          name="param_${param.key}"
+          id="param_${param.key}"
+          value="${this.params[param.key]}"
+        >
+          ${this.printParamSelectData(param)}
+        </select>
+      </p>`;
+        input = `<input
+        class="form__input form__input_flex"
+        name="param_${param.key}_file"
+        id="param_${param.key}_file"
+        type="${param.type}"
+      />`;
+        break;
       case "select":
         input = `<select
         class="form__input form__input_flex"
@@ -116,7 +137,7 @@ export class CommandConfigurationComponent implements BaseComponent {
         value="${this.params[param.key]}"
         placeholder="${(param.placeholder || param.label) || ''}"
       >
-        ${this.printParamData(param)}
+        ${this.printParamSelectData(param)}
       </select>`;
         break;
     
@@ -132,14 +153,15 @@ export class CommandConfigurationComponent implements BaseComponent {
       break;
     }
 
-    return `<p class="form__line form__line_flex">
+    return `${preInput}<p class="form__line form__line_flex">
     <label class="form__label">${param.label}</label>
     ${input}
   </p>`;
   }
 
-  getParams(): Params {
+  async getParams(): Promise<Params> {
     const params: Params = {};
+    await this.saveFiles();
     if (this.command?.params) {
       for (const param of this.command.params) {
         params[param.key] = this.form[`param_${param.key}`].value;
@@ -148,9 +170,45 @@ export class CommandConfigurationComponent implements BaseComponent {
     return params;
   }
 
-  printParamData(param: Param) {
+  printParamSelectData(param: Param) {
     return (param.asyncLoadData?this.data[param.key]:param.data)
       .map(d => `<option value="${d.id}" ${this.params[param.key] === d.id?"selected":""}>${d.name}</option>`)
       .join("");
+  }
+
+  async saveFiles() {
+    const promises: Promise<{id: string; param: string;}>[] = [];
+    this.form.querySelectorAll<HTMLInputElement>(`input[type="file"]`).forEach(input => {
+      if (input.files.length) {
+        promises.push(this.saveFile(input));
+      }
+    });
+    if (promises.length) {
+      const responses = await Promise.all(promises);
+      responses.forEach(r => {
+        if (r) {
+          this.form[`param_${r.param}`].innerHTML += `<option value="${r.id}">File</option>`;
+          this.form[`param_${r.param}`].value = r.id;
+        }
+      });
+    }
+  }
+
+  async saveFile(input: HTMLInputElement) {
+    const formData = new FormData();
+    formData.set('file', input.files[0]);
+    const param = input.id.split("_").slice(1).slice(0, -1).join("_");
+    try {
+      const response = await fetch(`${environment.api}files/${this.commandId}__${param}`, {
+        method: "POST",
+        body: formData
+      });
+
+      const {id} = await response.json();
+           
+      return {param, id};
+    } catch (error) {
+      return null;
+    }
   }
 }
